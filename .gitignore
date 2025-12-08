@@ -1,0 +1,41 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+config/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (optional - uncomment if needed)
+# data/*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ChromaDB
+*.duckdb
+*.parquet
+chroma.sqlite3
