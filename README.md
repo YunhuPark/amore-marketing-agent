@@ -38,7 +38,7 @@ Amore_Marketing_Agent/
 ### Prerequisites
 
 - Python 3.11
-- OpenAI API Key
+- GOOGLE_API_KEY
 
 ### Installation
 
@@ -57,9 +57,9 @@ Amore_Marketing_Agent/
 
 4. Configure environment variables:
    - Open `config/.env`
-   - Add your OpenAI API key:
+   - Add your GOOGLE_API_KEY:
      ```
-     OPENAI_API_KEY=your_api_key_here
+     GOOGLE_API_KEY=your_api_key_here
      ```
 
 ## Technology Stack
