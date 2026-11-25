@@ -3,10 +3,16 @@
 Streamlit 기반 UI
 """
 
+import html
 import sys
 from pathlib import Path
 import streamlit as st
 import pandas as pd
+
+
+def esc(value) -> str:
+    """unsafe_allow_html 로 넣는 모든 값(AI 출력·CSV 값)은 이스케이프한다."""
+    return html.escape(str(value), quote=True)
 
 # 프로젝트 루트를 sys.path에 추가
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -201,13 +207,13 @@ def main():
 
         st.markdown(f"""
         <div class="info-card">
-            <h4>🆔 {selected_customer_id}</h4>
-            <p><strong>연령대:</strong> {persona['age_group']}</p>
-            <p><strong>피부 타입:</strong> {persona['skin_type']}</p>
-            <p><strong>피부 고민:</strong> {persona['skin_concern']}</p>
-            <p><strong>선호 브랜드:</strong> {persona['preferred_brand']}</p>
-            <p><strong>라이프스타일:</strong> {persona['lifestyle_keyword']}</p>
-            <p><strong>구매 이력:</strong> {persona['purchase_history']}</p>
+            <h4>🆔 {esc(selected_customer_id)}</h4>
+            <p><strong>연령대:</strong> {esc(persona['age_group'])}</p>
+            <p><strong>피부 타입:</strong> {esc(persona['skin_type'])}</p>
+            <p><strong>피부 고민:</strong> {esc(persona['skin_concern'])}</p>
+            <p><strong>선호 브랜드:</strong> {esc(persona['preferred_brand'])}</p>
+            <p><strong>라이프스타일:</strong> {esc(persona['lifestyle_keyword'])}</p>
+            <p><strong>구매 이력:</strong> {esc(persona['purchase_history'])}</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -220,9 +226,9 @@ def main():
             brand_tone = st.session_state.generator.brand_tones[preferred_brand]
             st.markdown(f"""
             <div class="brand-tone-box">
-                <h4>📣 {brand_tone['brand']}</h4>
-                <p><strong>톤 설명:</strong><br>{brand_tone['tone_description']}</p>
-                <p><strong>예시:</strong><br>"{brand_tone['example_sentence']}"</p>
+                <h4>📣 {esc(brand_tone['brand'])}</h4>
+                <p><strong>톤 설명:</strong><br>{esc(brand_tone['tone_description'])}</p>
+                <p><strong>예시:</strong><br>"{esc(brand_tone['example_sentence'])}"</p>
             </div>
             """, unsafe_allow_html=True)
         else:
@@ -254,14 +260,14 @@ def main():
 
         st.markdown(f"""
         <div class="message-box">
-            <h3 style="color: #1a237e; margin-top: 0;">📧 {result['title']}</h3>
+            <h3 style="color: #1a237e; margin-top: 0;">📧 {esc(result['title'])}</h3>
             <p style="font-size: 1.1rem; line-height: 1.8; color: #333;">
-                {result['body']}
+                {esc(result['body'])}
             </p>
             <hr style="border: none; border-top: 1px solid #1a237e; margin: 1.5rem 0;">
             <p style="color: #666; font-size: 0.9rem; margin: 0;">
-                <strong>목적:</strong> {result['purpose']} |
-                <strong>브랜드:</strong> {result['brand']}
+                <strong>목적:</strong> {esc(result['purpose'])} |
+                <strong>브랜드:</strong> {esc(result['brand'])}
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -276,14 +282,14 @@ def main():
             with products_cols[col_idx]:
                 st.markdown(f"""
                 <div class="product-card">
-                    <h4 style="color: #1a237e; margin-top: 0;">{product['brand']}</h4>
-                    <h5 style="margin: 0.5rem 0;">{product['product_name']}</h5>
+                    <h4 style="color: #1a237e; margin-top: 0;">{esc(product['brand'])}</h4>
+                    <h5 style="margin: 0.5rem 0;">{esc(product['product_name'])}</h5>
                     <p style="color: #666; font-size: 0.9rem;">
-                        <strong>카테고리:</strong> {product['category']}<br>
+                        <strong>카테고리:</strong> {esc(product['category'])}<br>
                         <strong>가격:</strong> {int(product['price']):,}원
                     </p>
                     <div>
-                        {' '.join([f'<span class="tag">{tag}</span>' for tag in product['tags'].split()[:3]])}
+                        {' '.join([f'<span class="tag">{esc(tag)}</span>' for tag in str(product['tags']).split()[:3]])}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
